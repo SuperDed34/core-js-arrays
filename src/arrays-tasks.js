@@ -354,8 +354,15 @@ function createChunks(arr, chunkSize) {
  *    generateOdds(2) => [ 1, 3 ]
  *    generateOdds(5) => [ 1, 3, 5, 7, 9 ]
  */
-function generateOdds(/* len */) {
-  throw new Error('Not implemented');
+function generateOdds(len) {
+  let counter = 1;
+  return len === 0
+    ? ['']
+    : Array.from({ length: len }).map(() => {
+        const val = counter;
+        counter += 2;
+        return val;
+      });
 }
 
 /**
@@ -370,8 +377,10 @@ function generateOdds(/* len */) {
  *   getElementByIndices(['one','two','three'], [2]) => 'three'  (arr[2])
  *   getElementByIndices([[[ 1, 2, 3]]], [ 0, 0, 1 ]) => 2        (arr[0][0][1])
  */
-function getElementByIndices(/* arr, indices */) {
-  throw new Error('Not implemented');
+function getElementByIndices(arr, indices) {
+  return indices.length === 1
+    ? arr[indices[0]]
+    : getElementByIndices(arr[indices[0]], indices.slice(1));
 }
 
 /**
@@ -386,8 +395,23 @@ function getElementByIndices(/* arr, indices */) {
  *  getFalsyValuesCount([ -1, 'false', null, 0 ]) => 2
  *  getFalsyValuesCount([ null, undefined, NaN, false, 0, '' ]) => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  return arr.length === 0
+    ? 0
+    : arr.reduce((acc, val) => {
+        let acc2 = acc;
+        if (
+          val === undefined ||
+          val === null ||
+          val === false ||
+          val === 0 ||
+          Number.isNaN(val) ||
+          val === ''
+        ) {
+          acc2 += 1;
+        }
+        return acc2;
+      }, 0);
 }
 
 /**
@@ -408,8 +432,21 @@ function getFalsyValuesCount(/* arr */) {
  *                              [0,0,0,1,0],
  *                              [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  let pos = -1;
+  const res = Array.from({ length: n }).map(() => {
+    pos += 1;
+    return Array.from({ length: n }).map((val, id) => {
+      let val2 = val;
+      if (id === pos) {
+        val2 = 1;
+        return val2;
+      }
+      val2 = 0;
+      return val2;
+    });
+  });
+  return res;
 }
 
 /**
